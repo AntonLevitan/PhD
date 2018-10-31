@@ -22,6 +22,10 @@
 
 	setup ssh keypairs in every workstation for access
 
+	PhD:
+
+		created repository PhD for this file and its possible future branches
+
 	RNASeq:
 
 		created an RNASeq repository
