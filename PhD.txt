@@ -1,0 +1,476 @@
+1) Setup ssh private/public keys
+
+	ssh-keygen generates a private/public key pair
+	stored in ~/.ssh
+	copy folder to another machine for remote access to sites/servers
+
+2) Configure ssh pair auth for nova
+
+	TODO:
+	test config of pairs
+	see if can be done with rack-pace-01 as well
+
+	FileZilla setup for GUI file transfer
+
+4) Learn version control (Vlad's email or link in bookmarks / github training)
+
+	TODO:
+	Summary
+
+
+5) GitHub
+
+	setup ssh keypairs in every workstation for access
+
+	RNASeq:
+
+		created an RNASeq repository
+		pushing every day from the workstation
+
+	Ontotype:
+
+		created a pombe repository
+		pushing every day from the workstation
+
+		TODO:
+		rename if working on other organisms
+
+6) Python setup
+
+	TODO:
+	Compatibility issues with python2
+
+	Base Anaconda3 installation 
+	conda install goatools
+
+7) IDEs/text editors config
+
+	TODO:
+	check other text editors
+
+
+		Visual Studio Code
+
+			--- So far the best text editor ---
+
+			Create personal snippets:
+
+				File -> Preferences -> User snippets
+
+			Enable Python linting:
+
+				changed the majority of errors to "warning" / "information" as the linters were flagging too many
+				
+				e: error
+				f: fatal
+				w: warning
+
+				File -> Preferences -> Settings -> search for linting
+					
+					mypy- significant dependencies (Python3) changes
+					pep8
+					flake8
+			
+			Useful Plugins:
+
+				Python extensions
+
+				neuron (IPE):
+
+					open output pane: ctrl+k -> ctrl+v 
+					select relevant part of code 
+					send to output pane: alt+enter
+
+				Jupyter:
+
+					add #%% to start a Jupyter cell
+
+			Display presets:
+
+				lab laptop: (
+
+					specs: [Dell, 15", 1080p]
+					display: native
+					color scheme: Monokai
+
+				);
+
+				lab monitor: (
+
+					specs: [Dell, 24", 1080p]
+					display: dual
+					color scheme: Monokai
+
+				);	
+
+			
+		PyCharm
+		
+			TODO:
+			setup git
+			review interpeter
+			check plugins
+			
+			--- Test until license expiration only ---
+
+			Layout:
+
+				Scientific view
+				Python Console
+				Special Variables
+				Terminal
+
+			Display presets:
+
+				Monokai adjusted:
+
+					removed italics (editor->color_scheme->python)
+
+				lab laptop: (
+
+					specs: [Dell, 15", 1080p]
+					display: native
+					font: DejaVu Sans Mono
+					font_size: 14
+					line_spacing: 1.3
+					color scheme: Monokai adjusted
+
+				);
+
+				lab monitor: (
+
+					specs: [Dell, 24", 1080p]
+					display: dual
+					font: DejaVu Sans Mono
+					line_spacing: 1.3
+					color scheme: Monokai adjusted
+
+				);
+
+		Spyder
+
+			TODO:
+			review interpeter
+			check plugins
+			optimize display
+			optimize layout
+			check updates
+
+
+		Sublime text
+
+			TODO:
+			check plugins for Sublime Text
+			see if paid account necessary
+			verify installation- plugins aren't working			
+
+			Display presets:
+
+				lab laptop: (
+
+					specs: [Dell, 15", 1080p]
+					display: native
+					font: INCONSOLATA
+					font_size: 10
+					color scheme: Monokai
+
+				);
+
+				lab monitor: (
+
+					specs: [Dell, 24", 1080p]
+					display: dual
+					font: INCONSOLATA
+					font_size: 10
+					color scheme: Monokai
+
+				);
+
+
+8) NGS pipeline
+
+	TODO:
+	review Linux tools installation
+	document bash pipeline
+	Python scripts compatibility
+	go over Tn pipeline with Vladimir
+
+9) Administration
+
+	TODO:
+	get studies approval for transportation
+	go to train station to buy the discounted tickets
+	go talk to administration about student ID
+
+	Courses registration:
+
+		Life Sciences:
+
+			Courses: (
+
+				Concepts in statistics
+				Intro to Bioinformatics
+				Methods in Bioinformatics (lab)
+
+			);
+
+		Computer Science:
+
+			Courses: (
+
+				Roded's seminar
+
+			);
+
+
+10) RNA Seq Project
+
+	TODO:
+	-- subprocess python https://docs.python.org/3/library/subprocess.html --
+	consider changing to A22 -> use one of the haplotypes 
+	matched normalization
+	plot scaled version according to chromosome length
+	vertical alignment of chromosomes
+	normalize reads by ploidy
+	change moving average calculation for each chromosome
+	ask Ella for aneuploidy example
+	review outliers
+	compare outliers against repetetive sequences. Database1A TN paper. follow up emails from Vlad.
+	compare outliers between haploid and diploid
+
+	Setup:
+
+	install biostar conda env- bioinfo:
+
+		Python 3.6 conda-forge
+
+		curl http://data.biostarhandbook.com/install/conda.txt | xargs conda install -y
+
+		contains:
+
+			entrez-direct
+			parallel=20180922
+			bwa
+			htslib
+			bowtie2
+			emboss
+			bedtools
+			samtools
+			bamtools
+			sra-tools
+			cutadapt
+			seqtk
+			datamash
+			bcftools
+			freebayes
+			subread
+			bioawk
+			hisat2
+			bbmap
+			trimmomatic
+			fastqc
+			snpeff
+			picard
+			blast
+			perl-list-moreutils
+
+		install multiqc for comparative reports of sequencing data -- not sure how useful
+
+	Bash pipeline:
+
+		https://github.com/joshuamwang/RNA-Seq_Analysis
+
+		CA sample RNA Seq data:
+			
+			https://drive.google.com/uc?id=1AP_xnwmqXobrquf7kHYEOdo0FtI9h7fo&export=download
+		
+		fastqc quialty control:
+
+			fastqc CA_fastq.gz
+
+		download and extract reference genome to a subfolder:
+
+			mkdir genome
+			cd genome
+			wget http://candidagenome.org/download/sequence/C_albicans_SC5314/Assembly21/current/C_albicans_SC5314_A21_current_chromosomes.fasta.gz
+			gunzip C_albicans_SC5314_A21_current_chromosomes.fasta.gz
+			cd ..
+
+		creating a genome index in STAR:
+
+			STAR --runThreadN 12 --runMode genomeGenerate --genomeDir genome --genomeFastaFiles genome/C_albicans_SC5314_A21_current_chromosomes.fasta --sjdbGTFtagExonParentTranscript ID
+			Note: removed '$' from original pipeline
+
+		align in STAR
+
+			STAR --runThreadN 12 --outSAMstrandField intronMotif --genomeDir genome --readFilesIn CA.fastq.gz --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --alignIntronMin 30 --alignIntronMax 1000 
+			Note: Remove the "--readFilesCommand zcat" flag if the fastq file is not gzipped.
+			Note: changed CA.fastq.gz to Ca_fastq.gz
+
+		output:
+
+			ls
+			Aligned.sortedByCoord.out.bam  <-- alignment file
+			Log.final.out                  <-- alignment statistics
+			Log.out
+			Log.progress.out
+			SJ.out.tab
+
+		change name of .bam:
+
+			mv Aligned.sortedByCoord.out.bam CA.bam
+
+		index the alignment:
+
+			samtools index CA.bam
+			
+		examine in IGV:
+		
+			Select Genomes -> Load Genomes from File -> select C_albicans_SC5314_A21_current_chromosomes.fasta
+			Click File from the upper left corner -> Load from file -> select the CA.bam file.
+			Note: changed order from the original. genome first, file after.
+
+		count reads assigned to each feature:
+
+			obtain C. albicans gff file:
+
+				wget http://candidagenome.org/download/gff/C_albicans_SC5314/Assembly21/C_albicans_SC5314_A21_current_features.gff
+
+			run HTseq:
+
+				htseq-count -t gene -i ID -f bam CA.bam C_albicans_SC5314_A21_current_features.gff > CA_count.txt
+
+
+	Plotting reads (Python): 
+	
+		translating CA_count.txt using Tn paper features list from orf19 to A22:
+			-- check if translation is 100%% --
+			translation table orf19--_A22 complete list.xlsx
+			
+		mapping reads to all translated features and removing duplicate features
+		
+		transforming into log2
+
+		smoothing plot with moving averages of 10 and 100 features:
+
+			python translate_features for single feature log2(reads)
+			python translate_features --ma10 for moving average of 10 features
+			python translate_features --ma100 for moving average of 100 features
+
+		normalizing the reads by a matching normalization scheme (feature by feature) from the reference data
+		
+		plotting as a barchart for chromosome
+		
+		saving tabular data as .xlsx 
+		
+		saving plots as .png
+
+		
+
+11) Ontotype Project
+
+	TODO:
+	(optional) solve python compatibility issues: 
+		
+		memory limitation doesn't allow for --cv
+		doesn't run Python3 on nova due to lack of goatools
+
+	take apart- understand every function
+	generate stop points with intermediate outputs
+	revise regression from single test/train split into k-fold cross-validation
+	add flag for regression
+
+	taking apart and translating the code:
+		
+		download_data:
+
+			Python3 tranlation:
+
+				instead import StringIO -> from io import BytesIO
+				from urllib.request import urlretrieve
+				instead import urllib2 -> from urllib.request import urlopen
+				instead of 'w' -> 'wb'
+
+				added try/except to all of the above for dual compatibility
+
+			script provides 3 options for downloading data depending on their compression
+			download_file allows to choose the appropriate compression and checks for data file presence
+			downloads the data
+			downloads :
+
+				into Data/:
+
+					gene ontology: go-basic.obo
+					gene2go.gz
+					.gene_info for each species
+					costanzo supplementary data
+
+			
+		read_data:
+
+			read ontology from go-basic.obo
+			read interactions from constanzo file, columns:
+
+				0: gene a
+				2: gene b
+				4: Genetic interaction score
+				6: p-value
+			
+		generate_phenotype:
+
+			added random_state to RandomForestClassifier
+
+		cross_validate:
+
+			added random_state to RandomForestClassifier
+			added random_state to StratifiedKFold
+		
+		genotype_to_phenotype:
+		
+			-o generates ontotype.txt
+
+	apply methodology on different organisms:
+
+		S. pombe:
+
+			Ideas:
+
+				understand the hierarchical model of pombe article.
+				
+				run ontotype model on the different hierarchical groups mentioned:
+
+					protein complexes; r = 0.46
+					biological processes; r = 0.16
+					distinct biological processes; r = 0.03
+
+				comparison with S. cerevisiae interactions; r = 0.72: global trends for eukaryots? 
+
+				how is similarity score of pairs of mutants calculated? dataset S3 -> hierarchical clustering figure 2
+				similarity matrix is different size than GI, although same names of genes
+
+				similarity score threshold and then clustering to identify modules, table S2
+
+				E-MAP (pombe) uses a different metric (S score) than cerevisiae (SGA). those scoring systems are highly correlated: figure S5A
+
+				hierarchical clustering (supplemental experimental procedures) -> GO analysis for enrichment
+
+				cerevisiae data scaled: dataset S7
+
+			Article: 
+				
+				https://medschool.ucsd.edu/som/medicine/research/labs/ideker/publications/Documents/ryan_MolCell_2012.pdf
+
+			Steps for adapting code:
+
+				transformed pombe database of GI (m x n matrix) into list
+
+				revised code to allow for pombe GO annotations http://www.geneontology.org/page/download-go-annotations (pombe)
+
+				possible to access any organsm from that site in the same format
+
+				completed code adaptation by removing all references to species.json
+				
+
+		C. albicans
+
+	apply cross-species methodology
