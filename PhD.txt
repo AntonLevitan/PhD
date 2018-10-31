@@ -441,6 +441,10 @@
 
 				understand the hierarchical model of pombe article.
 				
+				ortho-essential genes have higher gene interactions
+
+				check our data for gene interactions in essential and non-essential genes
+
 				run ontotype model on the different hierarchical groups mentioned:
 
 					protein complexes; r = 0.46
