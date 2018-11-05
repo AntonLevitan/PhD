@@ -474,7 +474,7 @@
 
 				revised code to allow for pombe GO annotations http://www.geneontology.org/page/download-go-annotations (pombe)
 
-				possible to access any organsm from that site in the same format
+				possible to access any organism from that site in the same format
 
 				completed code adaptation by removing all references to species.json
 				
