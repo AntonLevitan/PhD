@@ -282,6 +282,10 @@
 
 	Bash pipeline:
 
+		TODO:
+		rewrite for A22
+		recode as a pipeline
+
 		https://github.com/joshuamwang/RNA-Seq_Analysis
 
 		CA sample RNA Seq data:
@@ -348,11 +352,17 @@
 	Plotting reads (Python): 
 	
 		translating CA_count.txt using Tn paper features list from orf19 to A22:
-			-- check if translation is 100%% --
+			
+			-- some loss of reads during translation --
+			
 			translation table orf19--_A22 complete list.xlsx
 			
 		mapping reads to all translated features and removing duplicate features
 		
+		adaptation to assembly 22 (A22) instead of translation from A21:
+
+			
+
 		transforming into log2
 
 		smoothing plot with moving averages of 10 and 100 features:
@@ -363,6 +373,10 @@
 
 		normalizing the reads by a matching normalization scheme (feature by feature) from the reference data
 		
+		added normalization by total number of reads
+
+			more info: https://ro-che.info/articles/2016-11-28-rna-seq-normalization	
+
 		plotting as a barchart for chromosome
 		
 		saving tabular data as .xlsx 
@@ -453,9 +467,6 @@
 
 				comparison with S. cerevisiae interactions; r = 0.72: global trends for eukaryots? 
 
-				how is similarity score of pairs of mutants calculated? dataset S3 -> hierarchical clustering figure 2
-				similarity matrix is different size than GI, although same names of genes
-
 				similarity score threshold and then clustering to identify modules, table S2
 
 				E-MAP (pombe) uses a different metric (S score) than cerevisiae (SGA). those scoring systems are highly correlated: figure S5A
@@ -477,7 +488,9 @@
 				possible to access any organism from that site in the same format
 
 				completed code adaptation by removing all references to species.json
-				
+
+				managed to generate results- AUCs of 0.64 (as Sc) and up, with increasingly more stringent cut-offs of similarity and interactions score
+			
 
 		C. albicans
 
