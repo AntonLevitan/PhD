@@ -230,14 +230,9 @@
 10) RNA Seq Project
 
 	TODO:
-	-- subprocess python https://docs.python.org/3/library/subprocess.html --
-	consider changing to A22 -> use one of the haplotypes 
-	matched normalization
 	plot scaled version according to chromosome length
 	vertical alignment of chromosomes
-	normalize reads by ploidy
 	change moving average calculation for each chromosome
-	ask Ella for aneuploidy example
 	review outliers
 	compare outliers against repetetive sequences. Database1A TN paper. follow up emails from Vlad.
 	compare outliers between haploid and diploid
@@ -314,7 +309,7 @@
 			STAR --runThreadN 12 --outSAMstrandField intronMotif --genomeDir genome --readFilesIn CA.fastq.gz --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --alignIntronMin 30 --alignIntronMax 1000 
 			Note: Remove the "--readFilesCommand zcat" flag if the fastq file is not gzipped.
 			Note: changed CA.fastq.gz to Ca_fastq.gz
-
+			
 		output:
 
 			ls
@@ -347,6 +342,7 @@
 			run HTseq:
 
 				htseq-count -t gene -i ID -f bam CA.bam C_albicans_SC5314_A21_current_features.gff > CA_count.txt
+				Note: added --stranded=no flag as most sequences are unstranded. increased mapping to features quantity by orders of magnitude in some cases
 
 
 	Plotting reads (Python): 
@@ -361,7 +357,10 @@
 		
 		adaptation to assembly 22 (A22) instead of translation from A21:
 
-			
+			adapted to A22. previous steps aren't needed
+			filtered reference A22 genome for haplotype A only
+			mapped and counted reads to features
+			filtered ouut haplotype B features from count file
 
 		transforming into log2
 
@@ -495,3 +494,20 @@
 		C. albicans
 
 	apply cross-species methodology
+
+12) Transposon Project
+
+	Notes:
+		TN pipeline is written in python2
+		installed all relevant packages in this version
+		fixed numpy problem that arose from default python installation of ubuntu
+			https://github.com/conda/conda/issues/6018
+		created new bioinfo virtual environment with python 3.6 using anaconda2
+		there is no pysam for windows
+
+	TODO:
+		ask Andrew for details regarding the protocol of the TN library generation 
+		figure out why only 50% of the reads align
+		work with Vladimir to adapt the TN pipeline for cerevisiae and glabrata
+		find a good cerevisiae .gff reference genome
+		document debugging with arguments in VS Code
