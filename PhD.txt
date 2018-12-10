@@ -232,10 +232,8 @@
 	TODO:
 	plot scaled version according to chromosome length
 	vertical alignment of chromosomes
-	change moving average calculation for each chromosome
-	review outliers
-	compare outliers against repetetive sequences. Database1A TN paper. follow up emails from Vlad.
-	compare outliers between haploid and diploid
+	document changes
+	account for haplotype B
 
 	Setup:
 
@@ -347,20 +345,11 @@
 
 	Plotting reads (Python): 
 	
-		translating CA_count.txt using Tn paper features list from orf19 to A22:
-			
-			-- some loss of reads during translation --
-			
-			translation table orf19--_A22 complete list.xlsx
-			
-		mapping reads to all translated features and removing duplicate features
-		
 		adaptation to assembly 22 (A22) instead of translation from A21:
 
-			adapted to A22. previous steps aren't needed
 			filtered reference A22 genome for haplotype A only
-			mapped and counted reads to features
-			filtered ouut haplotype B features from count file
+			mapped reads to features and counted 
+			filtered out haplotype B features from count file
 
 		transforming into log2
 
@@ -372,9 +361,9 @@
 
 		normalizing the reads by a matching normalization scheme (feature by feature) from the reference data
 		
-		added normalization by total number of reads
-
 			more info: https://ro-che.info/articles/2016-11-28-rna-seq-normalization	
+
+		added rpk rpm rpkm tpm normalizations schemes
 
 		plotting as a barchart for chromosome
 		
@@ -504,6 +493,7 @@
 			https://github.com/conda/conda/issues/6018
 		created new bioinfo virtual environment with python 3.6 using anaconda2
 		there is no pysam for windows
+		very-fast and very-sensitive are very similar in their alignment
 
 	TODO:
 		ask Andrew for details regarding the protocol of the TN library generation 
@@ -511,3 +501,61 @@
 		work with Vladimir to adapt the TN pipeline for cerevisiae and glabrata
 		find a good cerevisiae .gff reference genome
 		document debugging with arguments in VS Code
+		check if unaligned reads are from a plasmid that was used in the insertion protocol
+
+	Pipeline:
+		
+		1) get reference genome
+
+		2) create bowtie2 index for reference genome
+
+			bowtie2-build genome.fsa 'name of genome'
+				
+				returns multiple .bt2 files
+
+			bowtie2-inspect -n 'name of genome'
+
+				prints sequence to console
+			
+			can export bowtie2 indexes to a directory
+
+				export 
+				BOWTIE2_INDEXES=/path/to/my/bowtie2/databases/
+				cp *.bt2 $BOWTIE2_INDEXES
+
+			to use the index when mapping use '-x'
+
+		3) map reads
+
+		bowtie2 -p 8 --end-to-end --very-fast -x sc -U FreadI1_trimmed.fastq -S FreadI1_trimmed.sam
+		for paired end alignment speciffy -1 and -2 instead of -U
+		
+			bowtie2
+			-p plus the 'number of threads'
+			--end-to-end means 'global'
+			--sensitive is default (doesn't show significant improvement)
+
+			store unmapped reads to a separate .fastq file for further analysis
+
+				bowtie2 -p 8 --end-to-end --very-fast -x sc -U FreadI1_trimmed.fastq --un ./unmapped_both_ends.fastq --al ./mapped_both_ends.fastq 
+				--un-conc --al-conc for paired ends
+
+		4) change the format to .bam
+			
+			samtools view -Sb input.sam > output.bam 
+		
+		5) samtools sort input.bam output_sorted.bam
+
+			sort the .bam file
+		
+		6) samtools index output_sorted.bam
+
+			index the .bam file
+
+		7) counting and sorting unique sequences by number of appearance 
+
+			samtools view unmapped_FreadI1_trimmed_sorted.bam | cut -f 10 | sort | uniq -c | sort -nr > unmapped_sorted_reads.txt
+
+			blastn of top 20 returned: 17 reads matching various cloning vectors, 2 reads matching Hermes transposase and 1 read matching an expression vector    
+
+
