@@ -1,18 +1,23 @@
 1) Setup ssh private/public keys
 
+    --- NOT NEEDED FOR NOW ---
+
 	ssh-keygen generates a private/public key pair
 	stored in ~/.ssh
 	copy folder to another machine for remote access to sites/servers
 
 2) Configure ssh pair auth for nova
 
+    --- NOT NEEDED FOR NOW ---
+
 	TODO:
 	test config of pairs
 	see if can be done with rack-pace-01 as well
 
-	FileZilla setup for GUI file transfer
 
-4) Learn version control (Vlad's email or link in bookmarks / github training)
+4) Learn version control
+
+    --- DONE FOR NOW ---
 
 	TODO:
 	Summary
@@ -39,7 +44,14 @@
 		TODO:
 		rename if working on other organisms
 
+    Transposon:
+
+        created a transposon repository with Vlad's pipeline and my own
+        My pipeline runs Sc and Cg analysis well
+
 6) Python setup
+
+    --- DONE FOR NOW ---
 
 	TODO:
 	Compatibility issues with python2
@@ -55,7 +67,7 @@
 
 		Visual Studio Code
 
-			--- So far the best text editor ---
+			--- Not bad, lacks functionality. Plugins are awkward. ---
 
 			Create personal snippets:
 
@@ -110,12 +122,7 @@
 			
 		PyCharm
 		
-			TODO:
-			setup git
-			review interpeter
-			check plugins
-			
-			--- Test until license expiration only ---
+            --- The best one yet. Consider renewing license ---
 
 			Layout:
 
@@ -152,6 +159,8 @@
 				);
 
 		Spyder
+
+            --- Not good enough ---
 
 			TODO:
 			review interpeter
@@ -194,16 +203,11 @@
 8) NGS pipeline
 
 	TODO:
-	review Linux tools installation
-	document bash pipeline
-	Python scripts compatibility
-	go over Tn pipeline with Vladimir
+	Add reference genome indices folder for bowtie2
 
 9) Administration
 
 	TODO:
-	get studies approval for transportation
-	go to train station to buy the discounted tickets
 	go talk to administration about student ID
 
 	Courses registration:
@@ -277,7 +281,6 @@
 
 		TODO:
 		rewrite for A22
-		recode as a pipeline
 
 		https://github.com/joshuamwang/RNA-Seq_Analysis
 
@@ -376,15 +379,11 @@
 11) Ontotype Project
 
 	TODO:
-	(optional) solve python compatibility issues: 
-		
-		memory limitation doesn't allow for --cv
-		doesn't run Python3 on nova due to lack of goatools
+	memory limitation doesn't allow for --cv
+    doesn't run Python3 on nova due to lack of goatools
 
 	take apart- understand every function
-	generate stop points with intermediate outputs
-	revise regression from single test/train split into k-fold cross-validation
-	add flag for regression
+	add stop points with intermediate outputs
 
 	taking apart and translating the code:
 		
@@ -435,11 +434,13 @@
 		
 			-o generates ontotype.txt
 
-	apply methodology on different organisms:
+    apply methodology on different organisms:
 
 		S. pombe:
 
 			Ideas:
+
+                -- Mostly not relevant ---
 
 				understand the hierarchical model of pombe article.
 				
@@ -478,7 +479,14 @@
 				completed code adaptation by removing all references to species.json
 
 				managed to generate results- AUCs of 0.64 (as Sc) and up, with increasingly more stringent cut-offs of similarity and interactions score
-			
+
+        Started over:
+
+            TODO: consider how to filter pombe data
+
+            Not considering similarity score- irrelevant.
+            Regression CV showed 0.16 Pearson's R, with highly significant p value
+            Testing similar regression on Sc.
 
 		C. albicans
 
@@ -494,14 +502,13 @@
 		created new bioinfo virtual environment with python 3.6 using anaconda2
 		there is no pysam for windows
 		very-fast and very-sensitive are very similar in their alignment
+		wrapped the bash pipeline in a python script
 
 	TODO:
-		ask Andrew for details regarding the protocol of the TN library generation 
-		figure out why only 50% of the reads align
-		work with Vladimir to adapt the TN pipeline for cerevisiae and glabrata
-		find a good cerevisiae .gff reference genome
-		document debugging with arguments in VS Code
-		check if unaligned reads are from a plasmid that was used in the insertion protocol
+		Add classifier to the main script
+		Think about the possibility of adding filtering and sorting mapped/unmapped reads
+		Add downloads of dependencies :
+		    reference genomes, gff files, translation of genes lists (naming conventions), training sets.
 
 	Pipeline:
 		
@@ -528,7 +535,7 @@
 		3) map reads
 
 		bowtie2 -p 8 --end-to-end --very-fast -x sc -U FreadI1_trimmed.fastq -S FreadI1_trimmed.sam
-		for paired end alignment speciffy -1 and -2 instead of -U
+		for paired end alignment add '--fr' and replace -1 and -2 with -U
 		
 			bowtie2
 			-p plus the 'number of threads'
@@ -558,4 +565,10 @@
 
 			blastn of top 20 returned: 17 reads matching various cloning vectors, 2 reads matching Hermes transposase and 1 read matching an expression vector    
 
+		8) mapping the hits and their reads to chromosomes on a reference genome
 
+		9) generating classifier features using .gff annotation file and the generated hitmap
+
+		10) runs the classifier:
+
+		        requires manual generation of training set.
