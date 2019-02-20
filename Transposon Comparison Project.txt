@@ -1,0 +1,36 @@
+Main Objective:
+Compare performance of different transposons on gene essentiality classification in different yeasts
+
+
+Transposons:
+    
+    Ac/Ds
+    PiggyBac
+    Hermes
+
+Yeast Species:
+    
+    candida albicans
+    candida glabrata
+    s. cerevisiae
+    s. pombe
+
+Main Differences Between Transposons:
+
+    1) Specificity: target sequences
+
+        Hermes: NTNNNNAN
+        PiggyBac: TTAA
+        Ac/Ds: None
+
+        Assuming uniform distribution of nucleotides, frequency of target sequences:
+
+            Hermes = 0.25 * 0.25 = 0.0625
+            PiggyBac = 0.25 ^ 4 = 0.00390625
+
+        Assuming 40% GC content:
+
+            Hermes = 0.3 ^ 2 = 0.09
+            PiggyBac = 0.0081
+
+

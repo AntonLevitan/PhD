@@ -51,13 +51,18 @@
 
 6) Python setup
 
-    --- DONE FOR NOW ---
+    Base Anaconda3 installation
+	
+	conda config --add channels defaults
+	conda config --add channels bioconda
+	conda config --add channels conda-forge
+	
+	conda create -n <environment name> python=2.7
+	conda activate <environment name>
 
-	TODO:
-	Compatibility issues with python2
-
-	Base Anaconda3 installation 
-	conda install goatools
+	conda install goatools, pysam, gffutils, biopython, pandas, numpy, matplotlib, scikit-learn, scipy, htseq-count
+	
+	conda install samtools, bamtools, cutadapt, sra-tools, bowtie2, fastqc, STAR
 
 7) IDEs/text editors config
 
@@ -208,8 +213,7 @@
 9) Administration
 
 	TODO:
-	go talk to administration about student ID
-
+	
 	Courses registration:
 
 		Life Sciences:
@@ -219,6 +223,7 @@
 				Concepts in statistics
 				Intro to Bioinformatics
 				Methods in Bioinformatics (lab)
+				Python for Biologists
 
 			);
 
@@ -376,7 +381,7 @@
 
 		
 
-11) Ontotype Project
+11) Ontotype Genetic Interactions Project
 
 	TODO:
 	memory limitation doesn't allow for --cv
@@ -534,6 +539,9 @@
 
 		3) map reads
 
+		trim TN sequences
+		cutadapt --cores=6 -g TGCATGCGTCAATTTTACGCAGACTATCTTTCTA -o DMSO_trimmed.fastq DMSO.fastq --discard-untrimmed --overlap 20
+
 		bowtie2 -p 8 --end-to-end --very-fast -x sc -U FreadI1_trimmed.fastq -S FreadI1_trimmed.sam
 		for paired end alignment add '--fr' and replace -1 and -2 with -U
 		
@@ -544,7 +552,7 @@
 
 			store unmapped reads to a separate .fastq file for further analysis
 
-				bowtie2 -p 8 --end-to-end --very-fast -x sc -U FreadI1_trimmed.fastq --un ./unmapped_both_ends.fastq --al ./mapped_both_ends.fastq 
+				bowtie2 -p 8 --end-to-end --very-fast -x sp -U FreadI1_trimmed.fastq --un ./unmapped_both_ends.fastq --al ./mapped_both_ends.fastq 
 				--un-conc --al-conc for paired ends
 
 		4) change the format to .bam
@@ -572,3 +580,5 @@
 		10) runs the classifier:
 
 		        requires manual generation of training set.
+
+
